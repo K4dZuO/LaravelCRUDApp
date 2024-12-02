@@ -1,0 +1,240 @@
+// Импорт Bootstrap
+@use "bootstrap";
+
+$main-back-color: #e7f8d8;
+$header-color: #4f772d;
+$button-inactive-color: #2c4913;
+$button-active-color: #80bb4d;
+$card-colors: (#156e43, #228356, #2a9134, #3fa34d, #5bba6f); // Массив цветов
+$width-main: 1400px;
+
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+  xxxl: 1500px,
+);
+
+body {
+  background-color: $main-back-color;
+  // color: $header-color;
+}
+
+/* sm: от 576px до 768px */
+@media (min-width: map-get($grid-breakpoints, sm)) {
+  body {
+    font-size: 13px;
+  }
+}
+
+/* md: от 768px до 992px */
+@media (min-width: map-get($grid-breakpoints, md)) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* lg: от 992px до 1200px */
+@media (min-width: map-get($grid-breakpoints, lg)) {
+  body {
+    font-size: 15px;
+  }
+}
+
+/* xl: от 1200px до 1400px */
+@media (min-width: map-get($grid-breakpoints, xl)) {
+  body {
+    font-size: 17px;
+  }
+}
+
+/* xxl: от 1400px до 1500px */
+@media (min-width: map-get($grid-breakpoints, xxl)) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Широкий экран (>1500px) */
+@media (min-width: map-get($grid-breakpoints, xxxl)) {
+  body {
+    font-size: 20px; /* Пример изменения размера шрифта для широких экранов */
+  }
+}
+
+
+@mixin set-card-colors($colors, $repeat) {
+  @for $i from 1 through $repeat {
+    // Применяем стили к каждому элементу .card
+    &:nth-child(#{$repeat}n + #{$i}) {
+      background-attachment: nth($colors, $i);
+
+      // Применяем цвет фона для card-body
+      .card-body {
+        background-color: lighten(
+          nth($colors, $i),
+          15%
+        ); // Указываем цвет для card-body
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-animation {
+  animation: rotate 2s linear infinite; /* Измените длительность, если необходимо */
+}
+
+body {
+  background-color: $main-back-color;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  // box-sizing: border-box;
+}
+
+/* Шапка */
+.navbar {
+  background-color: $header-color;
+  padding: 15px;
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 70px;
+      height: 70px;
+      margin-right: 15px;
+    }
+    p {
+      font-size: 30px;
+      margin-top: 10px;
+    }
+  }
+
+  button {
+    font-size: 18px;
+    background-color: $button-inactive-color;
+    border: 2px solid black;
+    &:hover {
+      background-color: $button-active-color;
+    }
+  }
+}
+
+/* Основная часть */
+.main {
+  width: $width-main;
+  margin: auto;
+}
+
+h1 {
+  text-align: left;
+  margin-left: 40px;
+  // margin-bottom: 40px;
+}
+
+/* Контейнер с карточками */
+.container {
+  .row {
+    .col {
+      @include set-card-colors($card-colors, 5);
+      .card {
+        border-radius: 30px;
+        overflow: hidden;
+
+        .card-img-top {
+          height: 250px;
+          object-fit: cover;
+          border-bottom: 3px solid black;
+        }
+
+        .sign-label {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          color: white;
+          padding: 5px;
+          border: 1px solid white;
+          background-color: rgba(41, 96, 41, 0.9);
+          font-weight: bold;
+          border-radius: 5px;
+        }
+
+        .card-body {
+          .modal {
+            .btn {
+              color: white;
+            }
+          }
+
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          // background-color: red;
+
+          .card-title {
+            font-size: 24px;
+            font-weight: 700;
+          }
+
+          p {
+            font-size: 16px;
+            margin-bottom: 15px;
+          }
+          .btn {
+            align-self: flex-end;
+            background-color: $button-inactive-color;
+            &:hover {
+              background-color: $button-active-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+hr {
+  width: $width-main; /* ширина 1400px для hr */
+  margin: 10px; /* центрирование hr */
+  border: 4px solid #000; /* стиль линии */
+}
+
+/* Основной стиль для футера */
+footer {
+  max-width: $width-main;
+  color: black;
+  padding: 20px;
+  margin: auto;
+  hr {
+    max-width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    border: 3px solid black;
+  }
+  p {
+    margin: 0;
+    font-size: 2em;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+  }
+}
