@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
@@ -16,13 +13,12 @@ return new class extends Migration
             $table->text('head_card');
             $table->text('body_card');
             $table->text('body_modal');
+            $table->text('img_name');
             $table->timestamps();
+            $table->softDeletes(); // Добавляем поддержку Soft Deletes
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('cards');

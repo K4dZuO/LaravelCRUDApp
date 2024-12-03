@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{{--    <link href=".css" rel="stylesheet" type="text/css" />--}}
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
     <title>TurtleWiki</title>
@@ -22,40 +21,14 @@
             />
             <p>TurtleWiki</p>
         </a>
-        <button class="btn btn-outline-success" type="button" id="uploadButton">
-            Загрузить
-        </button>
+        <a  href="\cards\create">
+            <button class="btn btn-outline-success" type="button" id="uploadButton">
+                Добавить
+            </button>
+        </a>
     </div>
 </nav>
 
-<!-- Toast -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div
-        id="toastMessage"
-        class="toast"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-    >
-        <div class="toast-header">
-            <strong class="me-auto">Уведомление</strong>
-            <img
-                src="{{ asset('storage/spinner-solid.svg') }}"
-                class="rotate-animation"
-                alt="load"
-            />
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="toast"
-                aria-label="Close"
-            ></button>
-        </div>
-        <div class="toast-body">
-            На текущий момент этот функционал недоступен.
-        </div>
-    </div>
-</div>
 
 <!-- Основная часть -->
 <div class="container mt-4">
@@ -102,7 +75,7 @@
                 <div class="card h-100">
                     <p class="sign-label">Черепахи</p>
                     <img
-                        src="{{asset('storage/KaimanTurtles.jpg')}}"
+                        src="{{ asset('storage/cards/' . $card->img_name) }}"
                         class="card-img-top img-fluid"
                         alt="{{$card -> head_card}}"
                     />
@@ -111,11 +84,21 @@
                         <p class="card-text">
                             {{$card -> body_card}}
                         </p>
-                        <a href="#" class="btn btn-primary more-info" data-bs-toggle="modal" data-bs-target="#universalModal"  data-title="{{$card->head_card}}" data-body="{{$card->body_modal}}">Подробнее</a>
+                        <div class="d-flex justify-content-end">
+                            <a href="{{'/cards/'.$card->id}}" class="btn btn-primary more-info">
+                                Подробнее
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        @empty<h1>Нет ни одной карточки</h1>
+        @empty
+
+            <div style="height: 16em; width: 100% ;justify-content: right">
+                <br />
+                <h2 style="margin-left: 40%">Нет ни одной карточки!</h2>
+                <h2 style="margin-left: 40%">Добавьте что-нибудь!</h2>
+            </div>
 @endforelse
 
     </div>

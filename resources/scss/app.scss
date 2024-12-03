@@ -1,5 +1,6 @@
 // Импорт Bootstrap
 @use "bootstrap";
+@import "./forms"; // Подключение стилей формы
 
 $main-back-color: #e7f8d8;
 $header-color: #4f772d;
@@ -206,6 +207,7 @@ h1 {
     }
   }
 }
+
 
 hr {
   width: $width-main; /* ширина 1400px для hr */
