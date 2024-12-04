@@ -85,12 +85,6 @@ class CardController extends Controller
         return redirect()->route('cards.index');
     }
 
-    public function restore($id)
-    {
-        $card = Card::withTrashed()->find($id); // Включает удалённые записи
-        $card->restore(); // Восстановление записи
-        return redirect()->route('cards.index')->with('success', 'Карточка успешно восстановлена!');
-    }
 
 
     protected function validateRequest($id = null)
