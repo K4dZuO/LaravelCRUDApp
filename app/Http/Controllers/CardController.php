@@ -91,10 +91,9 @@ class CardController extends Controller
     {
         return request()->validate([
             'head_card' => ['required', 'max:50', 'unique:cards,head_card,' . $id],
-            'body_card' => ['required', 'max:255'],
-            'body_modal' => ['required', 'max:255'],
+            'body_card' => ['required', 'max:512'],
+            'body_modal' => ['required', 'max:512'],
             'image' => $id ? ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096'] : ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096'],
         ]);
     }
-
 }

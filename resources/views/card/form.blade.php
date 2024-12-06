@@ -1,4 +1,4 @@
-<form action="{{ isset($card) ? route('cards.update', $card->id) : route('cards.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ isset($card) ? route('cards.update', $card->id) : route('cards.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data">
     @csrf
     @if(isset($card))
         @method('PUT')  <!-- Метод для обновления карточки -->
