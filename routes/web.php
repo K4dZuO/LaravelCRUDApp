@@ -1,17 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CardController;
+use App\Http\Controllers\TurtleController;
 
 Route::get('/', function () {
-    return redirect('/cards');
+    return redirect('/turtles');
 });
 
 
-Route::get('/cards', [CardController::class, 'index'])->name('cards.index');
-Route::get('/cards/create', [CardController::class, 'create']) -> name('cards.create');
-Route::post('/cards', [CardController::class, 'store']) -> name('cards.store');
-Route::get('/cards/{card}', [CardController::class, 'show']) -> name('cards.show');
-Route::get('/cards/{card}/edit', [CardController::class, 'edit'])->name('cards.edit');
-Route::put('/cards/{card}', [CardController::class, 'update'])->name('cards.update');
-Route::delete('/cards/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
+Route::get('/turtles', [TurtleController::class, 'index'])->name('turtles.index');
+Route::get('/turtles/create', [TurtleController::class, 'create'])->name('turtles.create');
+Route::post('/turtles', [TurtleController::class, 'store'])->name('turtles.store');
+Route::get('/turtles/{turtle}', [TurtleController::class, 'show'])->name('turtles.show');
+Route::get('/turtles/{turtle}/edit', [TurtleController::class, 'edit'])->name('turtles.edit');
+Route::put('/turtles/{turtle}', [TurtleController::class, 'update'])->name('turtles.update');
+Route::delete('/turtles/{turtle}', [TurtleController::class, 'destroy'])->name('turtles.destroy');
+

@@ -11,12 +11,12 @@ class CardController extends Controller
     {
 //        $cards = Card::all();
         $cards = Card::all();
-        return view('card.index', compact('cards'));
+        return view('turtle.index', compact('cards'));
     }
 
     public function create()
     {
-        return view('card.create');
+        return view('turtle.create');
     }
 
     public function store(Request $request)
@@ -43,12 +43,12 @@ class CardController extends Controller
 
     public function show(Card $card)
     {
-        return view('card.show', compact('card'));
+        return view('turtle.show', compact('card'));
     }
 
     public function edit(Card $card)
     {
-        return view('card.edit', compact('card'));
+        return view('turtle.edit', compact('card'));
     }
 
     public function update(Request $request, Card $card)

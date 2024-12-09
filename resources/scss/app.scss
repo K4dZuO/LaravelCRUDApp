@@ -70,16 +70,16 @@ body {
 
 @mixin set-card-colors($colors, $repeat) {
   @for $i from 1 through $repeat {
-    // Применяем стили к каждому элементу .card
+    // Применяем стили к каждому элементу .turtle
     &:nth-child(#{$repeat}n + #{$i}) {
       background-attachment: nth($colors, $i);
 
-      // Применяем цвет фона для card-body
+      // Применяем цвет фона для turtle-body
       .card-body {
         background-color: lighten(
           nth($colors, $i),
           15%
-        ); // Указываем цвет для card-body
+        ); // Указываем цвет для turtle-body
       }
     }
   }
