@@ -3,14 +3,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Turtle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TurtleController extends Controller
 {
     public function index()
     {
-        $turtles = Turtle::all();
+        $user = Auth::user(); // Текущий пользователь
+//        if (!$user) {
+//            abort(403, 'Unauthorized access');
+//        }
+        if ($user->is_admin) {
+            $turtles = Turtle::withTrashed()->get();
+        }
+        else{
+            $turtles = Turtle::all();
+        }
         return view('turtle.index', compact('turtles'));
     }
+
 
     public function create()
     {
@@ -21,6 +32,7 @@ class TurtleController extends Controller
     {
         // Валидация данных
         $validatedData = $this->validateRequest();
+        $validatedData['user_id'] = Auth::id(); // Добавляем id текущего пользователя
 
         // Обработка изображения
         if ($request->hasFile('image')) {
@@ -30,19 +42,21 @@ class TurtleController extends Controller
             $validatedData['img_name'] = $imageName;
         }
         unset($validatedData['image']);
-//        dd($validatedData);
+
         // Сохранение данных
         Turtle::create($validatedData);
         return redirect()->route('turtles.index');
     }
 
-    public function show(Turtle $turtle)
+    public function show($id)
     {
+        $turtle = Turtle::withTrashed()->findOrFail($id);
         return view('turtle.show', compact('turtle'));
     }
 
-    public function edit(Turtle $turtle)
+    public function edit($id)
     {
+        $turtle = Turtle::withTrashed()->findOrFail($id);
         return view('turtle.edit', compact('turtle'));
     }
 
@@ -75,10 +89,33 @@ class TurtleController extends Controller
         return redirect()->route('turtles.index')->with('success', 'Карточка успешно удалена!');
     }
 
+    public function restore(Turtle $turtle)
+    {
+        // Проверка, является ли пользователь администратором
+        if (!Auth::user()->is_admin) {
+            abort(403, 'У вас нет прав восстановить данную карточку');
+        }
+
+        // Восстановление мягко удаленной карточки
+        $turtle->restore();
+
+        return redirect()->route('turtles.index');
+    }
+
+    public function forceDestroy($id)
+    {
+        $turtle = Turtle::withTrashed()->findOrFail($id);
+        $turtle->forceDelete();
+
+        return redirect()->route('turtles.index');
+    }
+
+
+
     protected function validateRequest($id = null)
     {
         return request()->validate([
-            'name_turtle' => ['required', 'max:50', 'unique:turtles,name_turtle,' . $id],
+            'name_turtle' => ['required', 'max:50', 'unique:turtles,name_turtle,' . ($id ?? 'NULL')],
             'main_info' => ['required', 'max:512'],
             'add_info' => ['required', 'max:512'],
             'image' => $id ? ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096'] : ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096'],

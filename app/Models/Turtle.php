@@ -9,10 +9,13 @@ use Carbon\Carbon;
 
 class Turtle extends Model
 {
-    protected $guarded = [];
     use SoftDeletes;
 
-    // Мутатор для created_at
+    protected $guarded = [];
+
+    /**
+     * Мутатор для created_at
+     */
     protected function createdAt(): Attribute
     {
         return Attribute::make(
@@ -20,11 +23,21 @@ class Turtle extends Model
         );
     }
 
-    // Мутатор для updated_at
+    /**
+     * Мутатор для updated_at
+     */
     protected function updatedAt(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => Carbon::parse($value)->format('d.m.Y H:i'), // Преобразование даты
         );
+    }
+
+    /**
+     * Связь с моделью User (черепаха принадлежит пользователю)
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

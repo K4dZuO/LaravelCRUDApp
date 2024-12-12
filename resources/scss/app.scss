@@ -1,12 +1,15 @@
-// Импорт Bootstrap
 @use "bootstrap";
 @import "./forms"; // Подключение стилей формы
 
-$main-back-color: #e7f8d8;
+$main-back-color: #d0dfbd;
 $header-color: #4f772d;
 $button-inactive-color: #2c4913;
-$button-active-color: #80bb4d;
-$card-colors: (#156e43, #228356, #2a9134, #3fa34d, #5bba6f); // Массив цветов
+$button-active-color: #7fba4d;
+$card-colors: (#156e43,
+#228356,
+#2a9134,
+#3fa34d,
+#5bba6f); // Массив цветов
 $width-main: 1400px;
 
 
@@ -124,7 +127,7 @@ body {
     }
   }
 
-  button {
+  .btn {
     font-size: 18px;
     background-color: $button-inactive-color;
     border: 2px solid black;
@@ -222,7 +225,7 @@ footer {
   padding: 20px;
   margin: auto;
   hr {
-    max-width: auto;
+    max-width: max-content;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;

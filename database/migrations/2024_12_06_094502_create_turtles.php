@@ -19,6 +19,11 @@ return new class extends Migration
             $table->text('img_name');
             $table->timestamps();
             $table->softDeletes(); // Добавляем поддержку Soft Deletes
+
+            // Добавляем столбец для связи с пользователем
+            $table->unsignedBigInteger('user_id'); // Добавляем столбец для связи с таблицей users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Устанавливаем внешний ключ
+
         });
     }
 
@@ -27,6 +32,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('turtles', function (Blueprint $table) {
+            $table->dropForeign(['user_id']); // Удаляем внешний ключ
+        });
         Schema::dropIfExists('turtles');
     }
 };

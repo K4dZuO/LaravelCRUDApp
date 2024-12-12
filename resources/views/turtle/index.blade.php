@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <script src="{{ mix('js/app.js') }}" defer></script>
+
     <title>TurtleWiki</title>
 </head>
 <body>
@@ -17,12 +17,14 @@
                 alt="turtle_logo"
                 width="50"
                 height="50"
-                class="d-inline-block img-fluid align-top"
-            />
+                class="d-inline-block img-fluid align-top"/>
             <p>TurtleWiki</p>
         </a>
+        <a href="/dashboard">
+            <button class="btn btn-outline-success" type="button" id="uploadButton">{{\Illuminate\Support\Facades\Auth::user()->username}}</button>
+        </a>
         <a href="{{ route('turtles.create') }}">
-            <button class="btn btn-outline-success" type="button" id="uploadButton">Добавить</button>
+            <button class="btn btn-primary" type="button" id="uploadButton">Добавить</button>
         </a>
     </div>
 </nav>
@@ -44,8 +46,16 @@
                     />
                     <div class="card-body">
                         <h5 class="card-title">{{ $turtle->name_turtle }}</h5>
+                        <p style="font-weight: bold">Автор: {{$turtle->user_id}}</p>
                         <p class="card-text">{{ $turtle->main_info }}</p>
                         <div class="d-flex justify-content-end">
+                            @if($turtle -> deleted_at)
+                                <div style="justify-content: left; width: 270px;">
+                                        <p class="btn btn-secondary"
+                                                style="color: red;"
+                                        >Удалено</p>
+                                </div>
+                            @endif
                             <a href="{{ route('turtles.show', $turtle->id) }}" class="btn btn-primary">Подробнее</a>
                         </div>
                     </div>

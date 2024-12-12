@@ -12,13 +12,15 @@ img.img-fluid {
     max-height: 400px;
 }
 
-.btn {
-    margin-left: 1%;
-}
+form{
+    .btn {
+        margin-left: 1%;
+    }
 
-.btn-primary {
-    background-color: #2c4913; // Замените $button-inactive-color, если нужно
-    &:hover {
-        background-color: #80bb4d; // Замените $button-active-color
+    .btn-primary {
+        background-color: #2c4913; // Замените $button-inactive-color, если нужно
+        &:hover {
+            background-color: #80bb4d; // Замените $button-active-color
+        }
     }
 }
