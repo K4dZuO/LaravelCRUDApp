@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Turtle;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,19 @@ class TurtleController extends Controller
         }
         else{
             $turtles = Turtle::all();
+        }
+        return view('turtle.index', compact('turtles'));
+    }
+    public function index_persone($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user-> is_admin){
+            $turtles = Turtle::where('user_id', $user->id)->withTrashed()->get();
+
+        }
+        else
+        {
+            $turtles = Turtle::where('user_id', $user->id)->get();
         }
         return view('turtle.index', compact('turtles'));
     }

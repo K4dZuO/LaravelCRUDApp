@@ -33,6 +33,21 @@ class Turtle extends Model
         );
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($turtle) {
+            if (!auth()->user()->can('delete', $turtle)) {
+                abort(403, 'У вас нет прав для удаления этой карточки.');
+            }
+        });
+
+        static::updating(function ($turtle) {
+            if (!auth()->user()->can('update', $turtle)) {
+//                abort(403, 'У вас нет прав для редактирования этой карточки.');
+            }
+        });
+    }
+
     /**
      * Связь с моделью User (черепаха принадлежит пользователю)
      */

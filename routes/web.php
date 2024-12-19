@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/turtles', [TurtleController::class, 'index'])->name('turtles.index');
+    Route::get('/users/{person}', [TurtleController::class, 'index_persone'])->name('turtles_person.index');
+
     Route::get('/turtles/create', [TurtleController::class, 'create'])->name('turtles.create');
     Route::post('/turtles', [TurtleController::class, 'store'])->name('turtles.store');
 
