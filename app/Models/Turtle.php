@@ -43,7 +43,7 @@ class Turtle extends Model
 
         static::updating(function ($turtle) {
             if (!auth()->user()->can('update', $turtle)) {
-//                abort(403, 'У вас нет прав для редактирования этой карточки.');
+                abort(403, 'У вас нет прав для редактирования этой карточки.');
             }
         });
     }
