@@ -46,7 +46,8 @@
                     />
                     <div class="card-body">
                         <h5 class="card-title">{{ $turtle->name_turtle }}</h5>
-                        <p style="font-weight: bold">Автор: {{$turtle->user_id}}</p>
+{{--                        <p style="font-weight: bold">Автор: {{$turtle->user_id}}</p>--}}
+                        <p style="font-weight: bold">Автор: {{ $turtle->user ? $turtle->user->username : 'Неизвестно' }}</p>
                         <p class="card-text">{{ $turtle->main_info }}</p>
                         <div class="d-flex justify-content-end">
                             @if($turtle -> deleted_at)
