@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TurtleController;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,6 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->withTrashed()
         ->name('turtles.restore');
     Route::delete('/turtles/{turtle}/force', [TurtleController::class, 'forceDestroy'])->name('turtles.force_destroy');
+
+    Route::post('/turtles/{turtle}/comments', [TurtleController::class, 'addComment'])->name('comments.store');
+
 
 });
 

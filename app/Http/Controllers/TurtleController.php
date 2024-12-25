@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Turtle;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,7 +65,7 @@ class TurtleController extends Controller
 
     public function show($id)
     {
-        $turtle = Turtle::withTrashed()->findOrFail($id);
+        $turtle = Turtle::with(['comments'])->withTrashed()->findOrFail($id);
         return view('turtle.show', compact('turtle'));
     }
 
@@ -122,6 +123,23 @@ class TurtleController extends Controller
         $turtle->forceDelete();
 
         return redirect()->route('turtles.index');
+    }
+
+    public function addComment(Request $request, Turtle $turtle)
+    {
+        $request->validate([
+            'text' => 'required|string|max:500',
+        ]);
+
+        // Сохранение комментария
+        Comment::create([
+            'id_post' => $turtle->id,
+            'username' => auth()->user()->username,  // Имя пользователя
+            'text' => $request->input('text'),
+            'time_comment' => now(), // Время комментария
+        ]);
+
+        return redirect()->route('turtles.show', $turtle->id)->with('success', 'Комментарий добавлен.');
     }
 
 

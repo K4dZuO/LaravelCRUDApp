@@ -22,6 +22,44 @@
         <h3>Дополнительная информация:</h3>
         <p>{{ $turtle->add_info }}</p>
     </div>
+    <br>
+    <br>
+
+
+    <div class="comments-section">
+        <h3>Комментарии</h3>
+        @forelse($turtle->comments as $comment)
+            <div class="comment">
+                <p><strong>{{ $comment->username }}</strong>
+                    (@if($comment->time_comment instanceof \Carbon\Carbon)
+                        {{ $comment->time_comment->format('d.m.Y H:i') }}
+                    @else
+                        {{ $comment->time_comment }}
+                    @endif
+{{--                    ):--}}
+                </p>
+
+                <p>{{ $comment->text }}</p>
+            </div>
+        @empty
+            <p>Комментариев пока нет.</p>
+        @endforelse
+    </div>
+
+    <!-- Форма добавления комментария -->
+    @if(auth()->check())
+        <form action="{{ route('comments.store', $turtle->id) }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <textarea name="text" class="form-control" rows="3" placeholder="Ваш комментарий..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Добавить комментарий</button>
+        </form>
+    @endif
+
+    <br>
+    <br>
+
     <a href="{{ route('turtles.index') }}" class="btn btn-secondary mt-4">Вернуться к списку</a>
 
     <div class="mt-4">
