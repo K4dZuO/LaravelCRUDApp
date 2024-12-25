@@ -1,10 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
+@section('content')
     <br />
     <div style="
     display: flex;
@@ -17,5 +13,4 @@
              font-size: 18px;
            vertical-align: center">К черепахам</a>
     </div>
-
-</x-app-layout>
+@endsection

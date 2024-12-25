@@ -12,17 +12,26 @@ class TurtleController extends Controller
     public function index()
     {
         $user = Auth::user(); // Текущий пользователь
-//        if (!$user) {
-//            abort(403, 'Unauthorized access');
-//        }
+
         if ($user->is_admin) {
+            // Администратор видит всех черепах, включая удаленных
             $turtles = Turtle::withTrashed()->get();
-        }
-        else{
-            $turtles = Turtle::all();
+        } else {
+            // Получаем ID друзей текущего пользователя
+            $friends = $user->friends->pluck('id');
+
+            // Добавляем ID текущего пользователя в список
+            $userAndFriends = $friends->push($user->id);
+
+            // Выбираем черепах, которые принадлежат текущему пользователю или его друзьям
+            $turtles = Turtle::whereIn('user_id', $userAndFriends)
+                ->orderBy('created_at', 'desc')
+                ->get();
         }
         return view('turtle.index', compact('turtles'));
     }
+
+
 
     public function index_persone($username)
     {
@@ -65,9 +74,10 @@ class TurtleController extends Controller
 
     public function show($id)
     {
-        $turtle = Turtle::with(['comments'])->withTrashed()->findOrFail($id);
+        $turtle = Turtle::with(['comments.user'])->findOrFail($id);
         return view('turtle.show', compact('turtle'));
     }
+
 
     public function edit($id)
     {

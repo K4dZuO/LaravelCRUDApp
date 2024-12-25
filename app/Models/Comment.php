@@ -25,6 +25,7 @@ class Comment extends Model
     // Связь с пользователем, если вам нужно (опционально)
     public function user()
     {
+//        return $this->belongsTo(User::class, 'user_id', 'id');
         return $this->belongsTo(User::class, 'username', 'username'); // Assuming 'username' is unique
     }
 }

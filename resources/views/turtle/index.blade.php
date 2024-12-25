@@ -23,6 +23,8 @@
         <a href="/dashboard">
             <button class="btn btn-outline-success" type="button" id="uploadButton">{{\Illuminate\Support\Facades\Auth::user()->username}}</button>
         </a>
+        <a href="{{ route('users.index') }}" class="btn btn-primary">Посмотреть всех пользователей</a>
+
         <a href="{{ route('turtles.create') }}">
             <button class="btn btn-primary" type="button" id="uploadButton">Добавить</button>
         </a>
