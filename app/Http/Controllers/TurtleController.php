@@ -141,17 +141,15 @@ class TurtleController extends Controller
             'text' => 'required|string|max:500',
         ]);
 
-        // Сохранение комментария
         Comment::create([
             'id_post' => $turtle->id,
-            'username' => auth()->user()->username,  // Имя пользователя
+            'user_id' => auth()->user()->id,  // Убедитесь, что `user_id` передается
             'text' => $request->input('text'),
-            'time_comment' => now(), // Время комментария
+            'time_comment' => now(),
         ]);
 
         return redirect()->route('turtles.show', $turtle->id)->with('success', 'Комментарий добавлен.');
     }
-
 
 
     protected function validateRequest($id = null)

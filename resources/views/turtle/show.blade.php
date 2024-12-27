@@ -30,24 +30,18 @@
         <h3>Комментарии</h3>
         @forelse($turtle->comments as $comment)
             <div class="comment" style="margin-bottom: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 5px;">
-                <p>
-                    <strong>{{ $comment->user->username }}</strong>
-                    @if(auth()->user()->friends->pluck('id')->contains($comment->user_id))
-                        <span style="color: green; font-weight: bold;">(Ваш друг)</span>
-                    @endif
-
-                    (@if($comment->time_comment instanceof \Carbon\Carbon)
-                        {{ $comment->time_comment->format('d.m.Y H:i') }}
-                    @else
-                        {{ $comment->time_comment }}
-                    @endif):
-                </p>
+                @if(auth()->user()->friends->contains($comment->user_id))
+                    <p style="color: green; font-weight: bold;">(Ваш друг)</p>
+                @endif
+                <strong>{{ $comment->user->username }}</strong>
+                ({{ $comment->time_comment->format('d.m.Y H:i') }}):
                 <p>{{ $comment->text }}</p>
             </div>
         @empty
             <p>Комментариев пока нет.</p>
         @endforelse
     </div>
+
 
 
 
