@@ -1,0 +1,20 @@
+.form-group {
+  margin-left: 1%;
+  width: 50%; }
+
+.form-group.mt-3 {
+  margin-top: 1rem; }
+
+img.img-fluid {
+  width: auto;
+  max-height: 400px; }
+
+.btn {
+  margin-left: 1%; }
+
+.btn-primary {
+  background-color: #2c4913; }
+  .btn-primary:hover {
+    background-color: #80bb4d; }
+
+/*# sourceMappingURL=forms.css.map */
